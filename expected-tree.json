@@ -1,0 +1,146 @@
+{
+    "schema_version": "1.0",
+    "pm": "composer",
+    "lockfile": "composer.lock",
+    "pattern": "diamond-dependency",
+    "notes": "psr/log is the shared apex of the diamond. monolog/monolog requires psr/log ^2|^3 and symfony/cache requires psr/log ^1|^2|^3. Composer resolves a single psr/log 3.0.2. Mend must report psr/log exactly once in its library count, with parent links to BOTH monolog/monolog and symfony/cache.",
+    "packages": [
+        {
+            "name": "monolog/monolog",
+            "version": "3.10.0",
+            "scope": "require",
+            "source": "registry",
+            "direct": true,
+            "children": [
+                {
+                    "name": "psr/log",
+                    "version": "3.0.2",
+                    "scope": "require",
+                    "source": "registry",
+                    "direct": false,
+                    "children": []
+                }
+            ]
+        },
+        {
+            "name": "symfony/cache",
+            "version": "6.4.36",
+            "scope": "require",
+            "source": "registry",
+            "direct": true,
+            "children": [
+                {
+                    "name": "psr/cache",
+                    "version": "3.0.0",
+                    "scope": "require",
+                    "source": "registry",
+                    "direct": false,
+                    "children": []
+                },
+                {
+                    "name": "psr/log",
+                    "version": "3.0.2",
+                    "scope": "require",
+                    "source": "registry",
+                    "direct": false,
+                    "children": []
+                },
+                {
+                    "name": "symfony/cache-contracts",
+                    "version": "3.6.0",
+                    "scope": "require",
+                    "source": "registry",
+                    "direct": false,
+                    "children": [
+                        {
+                            "name": "psr/cache",
+                            "version": "3.0.0",
+                            "scope": "require",
+                            "source": "registry",
+                            "direct": false,
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "name": "symfony/service-contracts",
+                    "version": "3.6.1",
+                    "scope": "require",
+                    "source": "registry",
+                    "direct": false,
+                    "children": [
+                        {
+                            "name": "psr/container",
+                            "version": "2.0.2",
+                            "scope": "require",
+                            "source": "registry",
+                            "direct": false,
+                            "children": []
+                        },
+                        {
+                            "name": "symfony/deprecation-contracts",
+                            "version": "3.6.0",
+                            "scope": "require",
+                            "source": "registry",
+                            "direct": false,
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "name": "symfony/var-exporter",
+                    "version": "7.4.8",
+                    "scope": "require",
+                    "source": "registry",
+                    "direct": false,
+                    "children": [
+                        {
+                            "name": "symfony/deprecation-contracts",
+                            "version": "3.6.0",
+                            "scope": "require",
+                            "source": "registry",
+                            "direct": false,
+                            "children": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "total_packages": 9,
+    "direct_count": 2,
+    "transitive_count": 7,
+    "unique_packages": [
+        "monolog/monolog:3.10.0",
+        "psr/cache:3.0.0",
+        "psr/container:2.0.2",
+        "psr/log:3.0.2",
+        "symfony/cache:6.4.36",
+        "symfony/cache-contracts:3.6.0",
+        "symfony/deprecation-contracts:3.6.0",
+        "symfony/service-contracts:3.6.1",
+        "symfony/var-exporter:7.4.8"
+    ],
+    "diamond_apex": {
+        "package": "psr/log",
+        "version": "3.0.2",
+        "parents": [
+            "monolog/monolog",
+            "symfony/cache"
+        ],
+        "constraint_from_monolog": "^2.0 || ^3.0",
+        "constraint_from_symfony_cache": "^1.1|^2|^3"
+    },
+    "mend_detection_expectations": {
+        "psr_log_must_appear_exactly_once": true,
+        "all_packages_must_appear": true,
+        "source_for_all": "registry",
+        "no_packages_dev": true,
+        "failure_modes_exercised": [
+            "duplicate psr/log entries (one per diamond path)",
+            "wrong resolved version for psr/log",
+            "missing parent link from psr/log to monolog/monolog",
+            "missing parent link from psr/log to symfony/cache"
+        ]
+    }
+}
